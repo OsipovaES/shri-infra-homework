@@ -59,12 +59,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          commit_list=$(git log --oneline v${{ github.event.inputs.release_version }}..HEAD)
+          commit_list=$(git log --oneline $latest_tag)
           gh issue create \
-            --title "Release v${{ github.event.inputs.release_version }}_fix${{ github.run_number }}" \
-            --body "$(echo -e "Date: $(date -u +"%Y-%m-%dT%H:%M:%SZ")<br> \
-              Дата: ${{ env.CURRENT_DATE }}
+            --title "Release v${{ github.run_number }}" \
+            --body "$(echo -e "Дата: $(date -u +"%Y-%m-%dT%H:%M:%SZ")<br> \
               Автор: ${{ github.actor }}<br> \
               Версия: ${{ github.run_number }}<br> \
-              Список коммитов: <br>$commit_list<br> \
-              Docker образ: [Ссылка](http://cr.yandex/crpkbossnpt5f3uj93p2/app:${{ github.event.inputs.release_version }}_fix${{ github.run_number }})")"
+              Коммиты: <br>$commit_list<br> \
+              Docker образ: cr.yandex/crpkbossnpt5f3uj93p2/app:${{ github.run_number }}")"
